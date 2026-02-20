@@ -1,5 +1,7 @@
 // this started as a normal inbox UI but turned into an anxiety thing
 
+
+
 const SND_SAVE = "fx_beep";
 const SND_DELETE = "fx_shoot7";
 const SND_OPEN =  "fx_click";
@@ -120,7 +122,7 @@ function buildPools() {
 
 	importantPool = [
 		{subject:"Mom called again", del:"I’ll miss her voice when it’s gone.", open:"She just wanted to hear you."},
-		{subject:"Doctor follow-up", del:"Ignoring it won’t make it disappear.", open:"It’s manageable. You caught it early."},
+		{subject:"Doctor follow-up ", del:"Ignoring it won’t make it disappear.", open:"It’s manageable. You caught it early."},
 		{subject:"Project deadline moved", del:"You could’ve had breathing room.", open:"An extra week helps more than you admit."},
 		{subject:"We need to talk", del:"Some conversations haunt you later.", open:"It’s hard, but not the end."},
 		{subject:"Rent confirmation", del:"You’ll worry about this at 3am.", open:"At least that’s settled."},
@@ -169,6 +171,7 @@ function buildPools() {
 	].map(m => ({...m, type:SPAM}));
 
 	unclearPool = [
+		{subject:"Fish🐟", del:"🐟", open:"🐟"},
 		{subject:"Unknown sender: hey", del:"You’ll wonder who it was.", open:"It goes nowhere."},
 		{subject:"Old draft resurfaced", del:"You bury that version of yourself.", open:"You remember who you were."},
 		{subject:"Re: last summer", del:"Closure slips away.", open:"It still hurts."},
@@ -258,7 +261,7 @@ function handleAction(action) {
 		else if (msg.type === SPAM) savedSpam++;
 		else if (msg.type === UNCLEAR) savedUnclear++;
 
-	} else {
+	} else { 
 		
 				PS.audioPlay(SND_DELETE);
 		PS.statusText(msg.del);
@@ -294,22 +297,22 @@ function determineEnding() {
 
 	// deleted everything that actually mattered
 	if (totalImportant > 0 && deletedImportant === totalImportant) {
-		return "There was more you could have done.";
+		return "❌ There was more you could have done.";
 	}
 
 	// avoided deciding at all
 	if (deletedImportant === 0 && deletedSpam === 0) {
-		return "You saved everything. Nothing really changed.";
+		return "📩 You saved everything. Nothing really changed.";
 	}
 
 	// did something, not everything
 	if (savedImportant >= 2 && deletedSpam >= 1 && savedImportant < totalImportant) {
-		return "You feel a little better.";
+		return "⭐ You feel a little better.";
 	}
 
 	// handled it cleanly
 	if (savedImportant === totalImportant && deletedSpam === totalSpam && totalImportant > 0) {
-		return "You kept what mattered.";
+		return "❤️‍🩹 You kept what mattered.";
 	}
 
 
